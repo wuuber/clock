@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas Óra</title>
+	<meta charset="utf-8"/>
+</head>
+<body>
+<canvas id="clock" width="500" height="500" style="border:1px solid #000000;">
+</canvas>
+<script>
+    
+    var c = document.getElementById("clock");
+	var ctx = c.getContext("2d");
+    setInterval(setClock, 1000);
+    
+    function createClock(){
+	ctx.clearRect(0, 0, c.width, c.height);
+    ctx.beginPath();
+	ctx.arc(250,250,200,0,2*Math.PI);
+	ctx.stroke();
+	ctx.closePath();
+
+	ctx.beginPath();
+	ctx.arc(250,250,2.5,0,2*Math.PI);
+	ctx.fill();
+	ctx.closePath();
+
+
+	ctx.font = "12px Arial";
+	ctx.fillText("12",242,45);
+	ctx.fillText("6",247,465);
+	ctx.fillText("3",455,253);
+	ctx.fillText("9",40,253);
+
+	ctx.moveTo(250,50);
+	ctx.lineTo(250,75);
+
+
+	ctx.moveTo(250,450);
+	ctx.lineTo(250,425);
+
+
+	ctx.moveTo(450,250);
+	ctx.lineTo(425,250);
+
+
+	ctx.moveTo(50,250);
+	ctx.lineTo(75,250);
+	ctx.stroke();
+
+    }
+    
+    function setClock()
+    {
+    createClock();
+    var date = new Date();
+	var hour = date.getHours();
+	var minute = date.getMinutes();
+	var second = date.getSeconds();
+
+    drawLine(ctx,second,Math.PI/30,1,200,"#E33");
+    drawLine(ctx,minute,Math.PI/30,2,175,"#000000");
+    drawLine(ctx,hour,Math.PI/6,5,150,"#000000");
+    }
+    
+    function drawLine(ctx,time,angle,width,length,color)
+    {
+        ctx.save();
+        ctx.translate(250,250);
+        ctx.rotate(angle*time);
+        ctx.strokeStyle=color;
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(0,-length);
+        ctx.lineWidth=width;
+        ctx.lineCap="round";
+        ctx.stroke();
+        ctx.restore();
+        
+    
+    }
+    
+    
+    window.onload = function()
+    {
+	    setClock();
+    }
+</script>
+</body>
+</html>
